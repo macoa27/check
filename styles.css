@@ -386,6 +386,10 @@ summary:hover {
   padding: 18px 24px;
 }
 
+.filtros-bar[hidden] {
+  display: none;
+}
+
 .filtros-bar .field {
   display: flex;
   flex-direction: column;
