@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chequeador de Deudores BCRA</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="page-header">
+  <h1>Chequeador de Deudores — BCRA</h1>
+  <p class="subtitle">Central de Deudores del Sistema Financiero · datos en vivo desde la API pública del BCRA</p>
+</header>
+
+<main>
+  <section class="input-card">
+    <label for="cuits">CUIT / CUIL a consultar</label>
+    <textarea id="cuits" rows="5" placeholder="Un CUIT/CUIL por línea o separados por coma. Ej:&#10;20111111112&#10;27-22222222-3"></textarea>
+    <div class="input-row">
+      <button id="btn-consultar">Consultar</button>
+      <button id="btn-export" class="secondary" disabled>Exportar CSV</button>
+      <span id="status" class="status"></span>
+    </div>
+  </section>
+
+  <section id="kpi-bar"></section>
+
+  <section id="filtros-bar" class="filtros-bar" hidden>
+    <div class="field">
+      <label for="filtro-texto">Buscar</label>
+      <input id="filtro-texto" type="text" placeholder="Nombre o CUIT..." />
+    </div>
+    <div class="field">
+      <label for="filtro-nivel">Nivel de riesgo</label>
+      <select id="filtro-nivel">
+        <option value="">Todos</option>
+        <option value="0">Bajo riesgo</option>
+        <option value="1">Riesgo moderado</option>
+        <option value="2">Riesgo alto</option>
+        <option value="3">Riesgo crítico</option>
+      </select>
+    </div>
+    <span id="filtros-status" class="status"></span>
+  </section>
+
+  <section id="resultados"></section>
+
+  <section class="input-card">
+    <h2 class="card-title">Simulador de descuento de cheque / pagaré / factura</h2>
+    <p class="subtitle">Calculá cuánto recibirías hoy si descontás un documento a cobrar, según el plazo y la tasa.</p>
+    <div class="simulador-form">
+      <div class="field">
+        <label for="sim-monto">Monto nominal ($)</label>
+        <input id="sim-monto" type="number" min="0" step="0.01" placeholder="1000000" />
+      </div>
+      <div class="field">
+        <label for="sim-plazo">Plazo (días)</label>
+        <input id="sim-plazo" type="number" min="1" step="1" placeholder="90" />
+      </div>
+      <div class="field">
+        <label for="sim-tasa">Tasa nominal anual (%)</label>
+        <input id="sim-tasa" type="number" min="0" step="0.01" placeholder="60" />
+      </div>
+      <button id="btn-simular">Simular</button>
+    </div>
+    <div id="simulador-resultado"></div>
+  </section>
+
+  <section class="input-card">
+    <h2 class="card-title">Buscar cheque denunciado</h2>
+    <p class="subtitle">Consultá si un cheque puntual fue denunciado (perdido, robado, adulterado), por banco y número.</p>
+    <div class="cheque-form">
+      <select id="cheque-entidad">
+        <option value="">Cargando bancos...</option>
+      </select>
+      <input id="cheque-numero" type="text" inputmode="numeric" placeholder="Número de cheque" />
+      <button id="btn-buscar-cheque">Buscar</button>
+    </div>
+    <div id="cheque-resultado"></div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
